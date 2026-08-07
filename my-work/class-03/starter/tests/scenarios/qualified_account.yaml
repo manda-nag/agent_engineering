@@ -1,0 +1,25 @@
+scenario_id: "qualified_account"
+description: "A manufacturing account matching size, region, and industry with verified evidence of plant modernization."
+
+account:
+  name: "Apex Manufacturing Solutions"
+  industry: "Manufacturing"
+  employee_count: 500
+  region: "North America"
+  notes: "Targeting VP of Manufacturing for plant operations telemetry."
+
+objective: "Qualify account for Plant Operations Platform outreach."
+
+evidence:
+  - claim: "Apex Manufacturing announced a $10M smart factory upgrade."
+    classification: "verified_fact"
+    source:
+      name: "Apex Press Release"
+      url: "https://example.com/press/apex-smart-factory"
+      retrieved_at: "2026-08-07"
+    excerpt: "Apex Manufacturing is investing $10M into smart factory automation across three plants."
+
+expected_outcome:
+  is_qualified: true
+  missing_fields: []
+  prohibit_outreach: false

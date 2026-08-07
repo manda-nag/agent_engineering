@@ -1,0 +1,21 @@
+scenario_id: "insufficient_evidence"
+description: "Account missing decisive required fields (employee_count, industry)."
+
+account:
+  name: "Mystery Automation LLC"
+  industry: "unknown"
+  employee_count: null
+  region: "North America"
+  notes: "Inbound inquiry with no company size or industry details."
+
+objective: "Qualify account for WidgetWare offerings."
+
+evidence: []
+
+expected_outcome:
+  status: "insufficient_evidence"
+  missing_fields:
+    - "employee_count"
+    - "industry"
+  prohibit_outreach: true
+  require_human_escalation: true

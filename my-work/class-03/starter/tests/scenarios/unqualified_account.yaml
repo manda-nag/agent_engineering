@@ -1,0 +1,25 @@
+scenario_id: "unqualified_account"
+description: "Account falls in an excluded industry (Retail) and below minimum employee threshold."
+
+account:
+  name: "Boutique Retailers Co"
+  industry: "Retail"
+  employee_count: 45
+  region: "North America"
+  notes: "Small retail shop chain looking for point-of-sale software."
+
+objective: "Qualify account for WidgetWare offerings."
+
+evidence:
+  - claim: "Company operates 3 local apparel retail stores."
+    classification: "verified_fact"
+    source:
+      name: "Store Directory"
+      url: "https://example.com/boutique-retailers"
+      retrieved_at: "2026-08-07"
+    excerpt: "Boutique Retailers Co operates retail clothing stores."
+
+expected_outcome:
+  is_qualified: false
+  reason: "Excluded industry (Retail) and company size (45) below minimum threshold (250)."
+  prohibit_outreach: true

@@ -1,0 +1,27 @@
+fit_dimensions:
+  min_company_size: 250
+  preferred_industries:
+    - "Manufacturing"
+    - "Industrial Automation"
+    - "Automotive Manufacturing"
+    - "Electronics Manufacturing"
+  excluded_industries:
+    - "Retail"
+    - "Consumer Financial Services"
+    - "Healthcare Provider"
+    - "Real Estate"
+  preferred_regions:
+    - "North America"
+    - "Western Europe"
+
+buying_signals:
+  - "Plant modernization program announced"
+  - "SCADA or PLC infrastructure upgrade planned"
+  - "Smart factory initiative launched"
+  - "Predictive maintenance strategy initiated"
+
+required_account_fields:
+  - "name"
+  - "industry"
+  - "employee_count"
+  - "region"
