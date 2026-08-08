@@ -19,6 +19,7 @@ prohibited_actions:
   - "modifying CRM data"
   - "making pricing commitments"
   - "making contractual commitments"
+  - "making performance guarantees"
 
 human_approval_required:
   - "external outreach"

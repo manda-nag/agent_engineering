@@ -5,6 +5,7 @@ fit_dimensions:
     - "Industrial Automation"
     - "Automotive Manufacturing"
     - "Electronics Manufacturing"
+    - "Semiconductor Manufacturing"
   excluded_industries:
     - "Retail"
     - "Consumer Financial Services"

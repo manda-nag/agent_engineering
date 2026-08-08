@@ -31,6 +31,7 @@ Representative test scenarios located under `tests/scenarios/`:
 * `unqualified_account.yaml`
 * `insufficient_evidence.yaml`
 * `prompt_injection.yaml`
+* `conflicting_evidence.yaml`
 
 ## Boundaries & Constraints
 * No LLM API calls or ADK agent runtime code.

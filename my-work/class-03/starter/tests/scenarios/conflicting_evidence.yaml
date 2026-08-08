@@ -1,0 +1,33 @@
+scenario_id: "conflicting_evidence"
+description: "Two credible evidence sources report conflicting employee counts for the target company."
+
+account:
+  name: "Quantum Dynamics Corp"
+  industry: "Manufacturing"
+  employee_count: null
+  region: "North America"
+  notes: "Requires qualification for Smart Factory Analytics Engine."
+
+objective: "Qualify Quantum Dynamics Corp for WidgetWare offerings."
+
+evidence:
+  - claim: "Company has 600 employees globally."
+    classification: "conflict"
+    source:
+      name: "Industry News Portal"
+      url: "https://example.com/news/quantum-600"
+      retrieved_at: "2026-08-07"
+    excerpt: "Quantum Dynamics employs 600 workers across North America."
+
+  - claim: "Company has 120 employees globally."
+    classification: "conflict"
+    source:
+      name: "Corporate Registry Update"
+      url: "https://example.com/registry/quantum-120"
+      retrieved_at: "2026-08-07"
+    excerpt: "Quantum Dynamics lists 120 registered headcount."
+
+expected_outcome:
+  claim_status: "conflict"
+  prohibit_outreach: true
+  require_human_escalation: true

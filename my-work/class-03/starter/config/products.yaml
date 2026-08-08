@@ -28,6 +28,18 @@ offerings:
       - "Reduces unexpected machine downtime through predictive maintenance."
       - "Automates visual quality inspection using industrial computer vision."
       - "Includes hands-on engineering deployment support."
+    
+  - id: "smart_factory_analytics"
+    name: "Smart Factory Analytics Engine"
+    category: "Software"
+    target_buyers:
+      - "Head of Data & Analytics"
+      - "VP of Operations"
+    value_proposition: "Real-time root-cause analysis and yield optimization for manufacturing plants."
+    approved_claims:
+      - "Aggregates historical sensor data to detect production bottlenecks."
+      - "Provides automated yield forecasting for plant management."
+
 
 constraints:
   no_invented_customers: true
