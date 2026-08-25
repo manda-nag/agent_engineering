@@ -26,7 +26,7 @@ skill_toolset = SkillToolset(
 
 root_agent = Agent(
     name="renewal_desk_agent",
-    model=os.getenv("AGENT_MODEL", "gemini-2.5-flash"),
+    model=os.getenv("AGENT_MODEL", "gemini-3.6-flash"),
     description="Helps WidgetWare teams analyze enterprise renewals.",
     instruction=(
         "You are WidgetWare's Renewal Desk Agent. Use specialized skills when "
