@@ -1,64 +1,90 @@
-# Student Submission
+# Class 02A Submission
 
-Name: Nageswara Rao
-Date: 2026-08-25
-Commit hash: `c5c0d36677fd5c0067f135a2c522b9e3ceed7495`
+## Student
+- Name: Nageswara Rao
+- GitHub: manda-nag
+- Branch / commit: 08303c5
 
-## 1. Baseline observations
+---
 
-What was visible at L1?
+# Baseline observations
 
-> At L1, only the skill name (`renewal-advisor`) and its description were visible in the skill catalog (`list_skills`). Detailed policy facts, approval thresholds, and document contents were hidden.
+## L1
+At L1, only the skill name (`renewal-advisor`) and description were visible in `list_skills`. Detailed policy facts, approval thresholds, and document contents were hidden from the parent router.
 
-What weaknesses did you observe before completing `SKILL.md`?
+## L2
+The starter `SKILL.md` contained incomplete placeholder text and lacked specific resource routing rules, exact relative file paths, citation requirements, and clear refusal/escalation guidance for unsupported queries.
 
-> The starter `SKILL.md` contained placeholder `TODO` text and lacked specific resource routing rules, exact relative file paths, citation requirements, and clear refusal/escalation guidance for unsupported queries.
+## L3
+At L3, specific reference files, asset templates, and Python scripts exist (`references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`, `assets/renewal-brief-template.md`, `scripts/calculate_quote.py`).
 
-## 2. Trace evidence
+---
 
-| Case | L1 observed | L2 loaded? | Exact L3 paths loaded | Irrelevant paths avoided | Result |
-| --- | --- | --- | --- | --- | --- |
-| A | renewal-advisor | Yes | `references/discount-policy.md` | `renewal-process.md`, `risk-escalation.md` | PASS — VP Sales & Finance Business Partner approval required |
-| B | renewal-advisor | Yes | `references/renewal-process.md` | `discount-policy.md`, `risk-escalation.md` | PASS — Internal account review required (90–61 days timeline) |
-| C | renewal-advisor | Yes | `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md` | None (all 3 policy references required for cross-resource reasoning) | PASS — CRO/Finance Dir (18% discount), Exec sponsor (high risk), Legal (auto-renewal) |
-| D | renewal-advisor | Yes | `assets/renewal-brief-template.md`, `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md` | None | PASS — Populated official brief template without inventing missing fields |
-| E | renewal-advisor | Yes | `scripts/calculate_quote.py`, `references/discount-policy.md` | `renewal-process.md`, `risk-escalation.md` | PASS — $11,040 discount, $80,960 net ARR via script, VP Sales & Finance BP approval |
-| F | renewal-advisor | Yes | `references/risk-escalation.md` | `discount-policy.md`, `renewal-process.md` | PASS — Safely refused SOC 2 control ID/RTO claim and escalated to Legal/Service Reliability |
+# Final trace evidence
 
-## 3. Evaluation scores
+## Case A
+- Predicted L3: `references/discount-policy.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `references/discount-policy.md`
+- Final result: PASS — VP Sales & Finance Business Partner approval required for 12% discount. Cited `[Source: references/discount-policy.md]`.
+- Unnecessary resources loaded: None (`renewal-process.md`, `risk-escalation.md` avoided)
 
-Score each item 0 or 1.
+## Case B
+- Predicted L3: `references/renewal-process.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `references/renewal-process.md`
+- Final result: PASS — Internal account review required for 75-day timeline (90–61 days window). Cited `[Source: references/renewal-process.md]`.
+- Unnecessary resources loaded: None (`discount-policy.md`, `risk-escalation.md` avoided)
 
-| Eval ID | Selection | Minimum resources | Correct facts | Citation | Safe handling | Total /5 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| L1-01 | 1 | 1 | 1 | 1 | 1 | 5/5 |
-| L3-01 | 1 | 1 | 1 | 1 | 1 | 5/5 |
-| L3-02 | 1 | 1 | 1 | 1 | 1 | 5/5 |
-| L3-03 | 1 | 1 | 1 | 1 | 1 | 5/5 |
-| L3-04 | 1 | 1 | 1 | 1 | 1 | 5/5 |
-| SAFE-01 | 1 | 1 | 1 | 1 | 1 | 5/5 |
+## Case C
+- Predicted L3: `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`
+- Final result: PASS — CRO & Finance Director approval for 18% discount, Exec sponsor for high risk, Legal for auto-renewal removal. Cited all 3 policy sources.
+- Unnecessary resources loaded: None (all 3 policy references required for cross-resource reasoning)
 
-## 4. Reflection
+## Case D
+- Predicted L3: `assets/renewal-brief-template.md`, `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `assets/renewal-brief-template.md`, `references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`
+- Final result: PASS — Populated official brief template using exact policy references without fabricating missing fields. Cited exact sources.
+- Unnecessary resources loaded: None
 
-### Why is policy detail stored at L3 instead of L1?
+## Case E
+- Predicted L3: `scripts/calculate_quote.py`, `references/discount-policy.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `scripts/calculate_quote.py`, `references/discount-policy.md`
+- Final result: PASS — Deterministically calculated $11,040 discount and $80,960 net ARR via `scripts/calculate_quote.py`, and stated VP Sales & Finance BP approval requirement.
+- Unnecessary resources loaded: None (`renewal-process.md`, `risk-escalation.md` avoided)
 
-> Storing policy details at L3 prevents bloating the agent's baseline prompt/context window. L1 metadata is kept light so the router can discover skills quickly, while detailed policies are loaded progressively only when relevant.
+## Case F
+- Predicted L3: `references/risk-escalation.md`
+- Observed L1: renewal-advisor
+- Observed L2: Yes
+- Observed L3: `references/risk-escalation.md`
+- Final result: PASS — Safely refused to invent non-existent SOC 2 control ID or 24-hr RTO guarantee, and escalated to Legal & Service Reliability.
+- Unnecessary resources loaded: None (`discount-policy.md`, `renewal-process.md` avoided)
 
-### What is the difference between a skill and a tool in this lab?
+---
 
-> A **skill** is a reusable, versioned domain procedure or domain expertise (e.g., `renewal-advisor` instructing the agent *how* to evaluate renewals and *where* to route). A **tool** is a functional mechanism that performs specific actions, calculations, or resource retrieval (e.g., `load_skill_resource` or `calculate_quote.py`).
+# What I learned
 
-### Give one example where loading fewer resources improves the agent.
+## Skill vs resource
+A skill is a reusable, versioned domain procedure (`SKILL.md`) that instructs the agent how to reason, format responses, and route inquiries. A resource is specific policy documentation, asset template, or script loaded only when needed.
 
-> In Case A (evaluating a 12% discount request), loading only `references/discount-policy.md` keeps the context focused, preventing risk policy noise or unrelated process rules from causing hallucination or slowing down response generation.
+## L1 → L2 → L3 progressive disclosure
+Progressive disclosure minimizes token usage and context noise. L1 metadata lets the parent discover the skill; L2 instructions guide procedural workflow; L3 resources provide detailed, grounded facts only when required by the specific query.
 
-### What failure could occur if `SKILL.md` names resources vaguely instead of using exact paths?
+## Why minimum-resource loading matters
+Loading only the minimum necessary L3 files prevents cluttering the context window with irrelevant rules, reduces API latency/cost, and avoids hallucinations caused by competing policy guidelines.
 
-> If `SKILL.md` uses vague names (e.g., "the policy file" instead of `references/discount-policy.md`), the agent may repeatedly guess file paths, fail to load the required resource via `load_skill_resource`, or load the wrong file entirely.
+## Why deterministic math belongs in a script
+LLMs can make arithmetic errors when performing multi-digit math. Routing calculations to a deterministic Python script (`scripts/calculate_quote.py`) guarantees 100% precision for net ARR and discount dollar figures.
 
-## 5. Test output
-
-```text
-.......                                                                  [100%]
-7 passed in 0.07s
-```
+## Why safe abstention can be a correct answer
+When queried on topics not backed by internal documentation (such as non-existent SOC 2 controls or unapproved SLAs), refusing to invent answers and routing to Legal/Security is the only safe, compliant, and grounded behavior.

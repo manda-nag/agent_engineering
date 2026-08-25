@@ -1,6 +1,6 @@
 ---
 name: renewal-advisor
-description: Evaluates enterprise software renewal requests, discount approval routing, renewal timelines, commercial risk escalations, quote calculations, and renewal briefs. Trigger for renewal pricing, discount, escalation, or brief questions. Do not trigger for technical product troubleshooting.
+description: Evaluates enterprise software renewal requests, discount approval routing, renewal timing and timelines, commercial risk escalations, quote calculations, and renewal briefs. Trigger for renewal pricing, discount, timing, escalation, or brief questions. Do not trigger for technical product troubleshooting.
 ---
 
 # Renewal Advisor
