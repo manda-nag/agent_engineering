@@ -99,29 +99,65 @@ critic = Agent(
     after_model_callback=log_model_response,
     tools=[append_to_state, exit_loop],
 )
-# TODO 6A: Later add the two report agents and ParallelAgent under this header.
+
+# Task 6A
+box_office_researcher = Agent(
+    name="box_office_researcher",
+    model=build_model(),
+    description="Considers the box-office potential of this film.",
+    instruction="""
+    PLOT_OUTLINE:
+    { PLOT_OUTLINE? }
+
+    INSTRUCTIONS:
+    Write a report on the box-office potential of a movie like the one in
+    PLOT_OUTLINE, using the reported performance of comparable recent films.
+    """,
+    output_key="box_office_report",
+)
+
+casting_agent = Agent(
+    name="casting_agent",
+    model=build_model(),
+    description="Generates casting ideas for this film.",
+    instruction="""
+    PLOT_OUTLINE:
+    { PLOT_OUTLINE? }
+
+    INSTRUCTIONS:
+    Generate casting ideas for the characters in PLOT_OUTLINE. Suggest actors
+    who have received positive feedback in similar roles, and explain the fit.
+    """,
+    output_key="casting_report",
+)
+
+preproduction_team = ParallelAgent(
+    name="preproduction_team",
+    sub_agents=[box_office_researcher, casting_agent],
+)
 
 file_writer = Agent(
     name="file_writer",
     model=build_model(),
     description="Creates marketing details and saves a pitch document.",
     instruction="""
-    INSTRUCTIONS:
-    - Create a marketable, contemporary movie title suggestion for the movie
-      described in the PLOT_OUTLINE. If a title has been suggested in
-      PLOT_OUTLINE, you can use it, or replace it with a better one.
-    - Use your 'write_file' tool to create a new txt file with these arguments:
-        - For filename, use the movie title.
-        - Write to the 'movie_pitches' directory.
-        - For content, extract from PLOT_OUTLINE:
-            - A logline
-            - A synopsis or plot outline
+INSTRUCTIONS:
+- Create a marketable, contemporary movie title for the movie described in
+  PLOT_OUTLINE. Reuse an existing title only if it is strong.
+- Use write_file to create a new txt file:
+    - Use the movie title as filename.
+    - Write to the movie_pitches directory.
+    - Include the PLOT_OUTLINE, BOX_OFFICE_REPORT, and CASTING_REPORT.
 
-    PLOT_OUTLINE:
-    { PLOT_OUTLINE? }
+PLOT_OUTLINE:
+{ PLOT_OUTLINE? }
 
-    # TODO 6C: Replace this entire instruction with the report-aware version.
-    """,
+BOX_OFFICE_REPORT:
+{ box_office_report? }
+
+CASTING_REPORT:
+{ casting_report? }
+""",
     generate_content_config=types.GenerateContentConfig(temperature=0),
     tools=[write_file],
 )
@@ -194,15 +230,17 @@ researcher = Agent(
     after_model_callback=log_model_response,
 )
 
-# TODO 5C: Add writers_room above film_concept_team.
+writers_room = LoopAgent(
+    name="writers_room",
+    description="Iterates through research and writing to improve a movie plot outline.",
+    sub_agents=[researcher, screenwriter, critic],
+    max_iterations=5,
+)
 
 film_concept_team = SequentialAgent(
     name="film_concept_team",
     description="Write a film plot outline and save it as a text file.",
-    sub_agents=[researcher, screenwriter, file_writer],
-    # TODO 5D: Replace the list above with [writers_room, file_writer].
-    # TODO 6B: Later replace it with
-    #           [writers_room, preproduction_team, file_writer].
+    sub_agents=[writers_room, preproduction_team, file_writer],
 )
 
 root_agent = Agent(
